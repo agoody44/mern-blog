@@ -6,12 +6,16 @@ import Form from './components/Form/Form'
 
 import blogs from './images/blogs.png';
 
+import useStyles from './styles';
+
 const App = () => {
+  const classes = useStyles();
+
   return (
     <Container maxWidth="lg">
-      <AppBar position='static' color='inherit'>
-        <Typography variant="h2" align='center'>Blogs</Typography>
-        {/* <img src={blogs} alt='blogs' height='60' /> */}
+      <AppBar className={classes.appBar} position='static' color='inherit'>
+        <Typography className={classes.heading} variant="h2" align='center'>Blogs</Typography>
+        <img className={classes.image}src={blogs} alt='blogs' height='60' />
       </AppBar>
       <Grow in>
         <Container>
