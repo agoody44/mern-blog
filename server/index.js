@@ -1,11 +1,12 @@
+import dotenv  from "dotenv";
 import express from 'express';
-import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 
-import postRoutes from './routes/post.js';
+import postRoutes from './routes/posts.js';
 
-import dotenv  from "dotenv";
+
+
 dotenv.config()
 
 
@@ -19,16 +20,25 @@ app.use(cors());
 
 app.use('/posts', postRoutes);
 
+mongoose
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+    })
+    .then(() => {
+        console.log('Connected to Mongo!');
+    })
+    .catch((err) => {
+        console.error('Error connecting to Mongo', err);
+    });
 
 
 
-const PORT = process.env.PORT|| 5000;
 
 
-
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => console.log(`Server Running on Port: ${PORT}`)))
-    .catch((error) => console.log(`${error} did not connect`));
+const PORT = process.env.PORT || 5000;
 
 
-mongoose.set('useFindAndModify', false);
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
